@@ -1,0 +1,11 @@
+.preloaderOverlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transform-origin: center;
+  background-color: var(--color-yellow-700);
+  aspect-ratio: 1;
+  width: max(100svh, 100svw);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+}
