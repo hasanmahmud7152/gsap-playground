@@ -5,6 +5,7 @@ const links = [
   { link: "/reveal-on-scroll", title: "reveal-on-scroll" },
   { link: "/loading-page-reveal", title: "loading-page-reveal" },
   { link: "/simple-counter", title: "simple-counter" },
+  { link: "/rolling", title: "rolling-counter" },
 ];
 
 export default function Home() {
