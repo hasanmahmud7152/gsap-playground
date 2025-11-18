@@ -4,6 +4,7 @@ const links = [
   { link: "/reveal-img-on-link-hover", title: "reveal-img-on-link-hover" },
   { link: "/reveal-on-scroll", title: "reveal-on-scroll" },
   { link: "/loading-page-reveal", title: "loading-page-reveal" },
+  { link: "/simple-counter", title: "simple-counter" },
 ];
 
 export default function Home() {
