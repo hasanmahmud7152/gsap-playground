@@ -17,6 +17,23 @@ export default function RollingPage() {
       });
     }, 500);
 
+    const obj = { val: 0 };
+
+    gsap.to(obj, {
+      val: 100,
+      duration: 5,
+      ease: "power3.out",
+      onUpdate: () => {
+        const element = counterWrapperRef.current?.querySelector(".second-box");
+        if (element) {
+          element.textContent = "a";
+        }
+
+        // const current = Math.floor(obj.val);
+        // element.textContent = current.toString();
+      },
+    });
+
     return () => {
       return clearInterval(foo);
     };
@@ -27,8 +44,8 @@ export default function RollingPage() {
       <div>
         <div className="relative size-12 overflow-hidden outline">
           <div ref={counterWrapperRef} className="counter-wrapper absolute top-0 left-0 w-full">
-            <div className="grid size-12 place-items-center">R</div>
-            <div className="grid size-12 place-items-center">R</div>
+            <div className="first-box grid size-12 place-items-center">R</div>
+            <div className="second-box grid size-12 place-items-center">R</div>
           </div>
         </div>
       </div>
