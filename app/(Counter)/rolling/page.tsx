@@ -4,51 +4,56 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useRef } from "react";
 
-export default function RollingPage() {
+export function RollingCounter({ duration: counterDuration = 3 }: { duration?: number }) {
   const counterWrapperRef = useRef<HTMLElementTagNameMap["div"]>(null);
 
   useGSAP(() => {
-    const foo = setInterval(() => {
+    const counter = { val: 1 };
+    gsap.to(counter, { val: 100, duration: counterDuration });
+
+    const updateCounter = (duration: number) => {
+      const elementA = counterWrapperRef.current?.querySelector(".counter-box-a");
+      const elementB = counterWrapperRef.current?.querySelector(".counter-box-b");
+
+      if (!(elementA && elementB)) {
+        return;
+      }
+
+      const val = Math.round(counter.val);
+
+      elementB.textContent = val.toString() + "%";
       gsap.to(counterWrapperRef.current, {
         top: "-100%",
+        ease: "power1.out",
+        duration: duration <= 0 ? 0.05 : duration,
         onComplete() {
+          elementA.textContent = elementB.textContent;
           gsap.set(counterWrapperRef.current, { top: "0%" });
+
+          if (val < 100) {
+            updateCounter(duration - counterDuration / 150);
+          }
         },
       });
-    }, 500);
-
-    const obj = { val: 0 };
-
-    gsap.to(obj, {
-      val: 100,
-      duration: 5,
-      ease: "power3.out",
-      onUpdate: () => {
-        const element = counterWrapperRef.current?.querySelector(".second-box");
-        if (element) {
-          element.textContent = "a";
-        }
-
-        // const current = Math.floor(obj.val);
-        // element.textContent = current.toString();
-      },
-    });
-
-    return () => {
-      return clearInterval(foo);
     };
+
+    updateCounter(counterDuration / 10);
   }, []);
 
   return (
-    <div className="grid h-screen place-items-center">
-      <div>
-        <div className="relative size-12 overflow-hidden outline">
-          <div ref={counterWrapperRef} className="counter-wrapper absolute top-0 left-0 w-full">
-            <div className="first-box grid size-12 place-items-center">R</div>
-            <div className="second-box grid size-12 place-items-center">R</div>
-          </div>
-        </div>
+    <div className="relative h-(--height,16px) w-12 overflow-hidden text-sm">
+      <div ref={counterWrapperRef} className="absolute top-0 left-0 w-full *:flex *:items-center *:justify-end">
+        <div className="counter-box-a h-(--height,16px) w-full">0</div>
+        <div className="counter-box-b h-(--height,16px) w-full">0</div>
       </div>
+    </div>
+  );
+}
+
+export default function RollingPage() {
+  return (
+    <div className="grid h-screen place-items-center font-mono">
+      <RollingCounter></RollingCounter>
     </div>
   );
 }

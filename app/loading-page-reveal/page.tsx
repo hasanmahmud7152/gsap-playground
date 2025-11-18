@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { SplitText } from "gsap/all";
 import { useRef } from "react";
 import styles from "./styles.module.css";
+import { RollingCounter } from "../(Counter)/rolling/page";
 
 gsap.registerPlugin(SplitText);
 
@@ -28,56 +29,50 @@ function animate(
     duration: 0.25,
     delay: 0.1,
     ease: "expo.inOut",
-  })
-    .to(
-      ".preloader-copy .line",
-      {
-        y: "0%",
-        duration: 1,
-        ease: "expo.out",
-        stagger: 0.075,
-      },
-      "<",
-    )
-    .to(
-      preLoaderOverlayEl,
-      {
-        opacity: 1,
-        duration: 0.25,
-        ease: "expo.in",
-      },
-      "-=0.85",
-    )
+  }).to(
+    ".preloader-copy .line",
+    {
+      y: "0%",
+      duration: 1,
+      ease: "expo.out",
+      stagger: 0.075,
+    },
+    "<",
+  );
+
+  tl.to(
+    preLoaderOverlayEl,
+    {
+      opacity: 1,
+      duration: 0.25,
+      ease: "expo.in",
+    },
+    "-=0.85",
+  )
     .to(preLoaderOverlayEl, {
       scale: 0.1,
-      duration: 0.25,
-      ease: "power2.out",
-      delay: 0.1,
+      duration: 0.2,
+      ease: "power1.out",
     })
     .to(preLoaderOverlayEl, {
       scale: 0.25,
       duration: 0.5,
-      ease: "power3.out",
+      ease: "sine.out",
     })
     .to(preLoaderOverlayEl, {
       scale: 0.5,
-      duration: 0.3,
-      ease: "power4.out",
+      duration: 0.2,
+      ease: "sine.out",
     })
     .to(preLoaderOverlayEl, {
       scale: 0.65,
       duration: 0.2,
-      ease: "power2.out",
-    })
-    .to(preLoaderOverlayEl, {
-      scale: 0.75,
-      duration: 0.1,
-      ease: "power2.out",
+      ease: "sine.out",
     })
     .to(preLoaderOverlayEl, {
       scale: 1,
       duration: 0.3,
-      ease: "power3.out",
+      ease: "sine.inOut",
       onComplete() {
         AppScroll.release();
 
@@ -151,7 +146,7 @@ export default function Page() {
   const preLoaderTextContainerRef = useRef<HTMLElementTagNameMap["div"]>(null);
   const preLoaderOverlayRef = useRef<HTMLElementTagNameMap["div"]>(null);
   const pageContentRef = useRef<HTMLElementTagNameMap["div"]>(null);
-  const counterRef = useRef<HTMLElementTagNameMap["p"]>(null);
+  // const counterRef = useRef<HTMLElementTagNameMap["p"]>(null);
 
   useGSAP(() => {
     AppScroll.lock();
@@ -161,7 +156,7 @@ export default function Page() {
     gsap.set(".preloader-copy .line", { y: "100%" });
 
     gsap.set(pageContentRef.current, { y: "100vh" });
-    animateCounter(counterRef.current, 4.8, 0.2);
+    // animateCounter(counterRef.current, 4.8, 0.2);
     animate(preLoaderOverlayRef.current, pageContentRef.current);
   }, []);
 
@@ -187,9 +182,7 @@ export default function Page() {
             </div>
 
             <div className="ml-auto self-center">
-              <p ref={counterRef} className="preloader-counter font-mono text-sm font-semibold">
-                0%
-              </p>
+              <RollingCounter duration={4} />
             </div>
           </div>
         </div>
