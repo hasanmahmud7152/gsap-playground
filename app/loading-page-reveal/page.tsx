@@ -76,7 +76,7 @@ function animate(
       onComplete() {
         AppScroll.release();
 
-        gsap.set(document.querySelector("#preloader-text-content"), { opacity: 0 });
+        gsap.set(document.querySelector("#preloader-text-content"), { opacity: 0, pointerEvents: "none" });
       },
     })
     .to(
@@ -162,7 +162,7 @@ export default function Page() {
 
   return (
     <>
-      <section className="pointer-events-one fixed inset-0 z-10 mx-auto">
+      <section className="fixed inset-0 z-10 mx-auto">
         <div
           ref={preLoaderTextContainerRef}
           id="preloader-text-content"
@@ -182,7 +182,7 @@ export default function Page() {
             </div>
 
             <div className="ml-auto self-center">
-              <RollingCounter duration={4} />
+              <RollingCounter delay={0.8} duration={2.2} acceleration={200} />
             </div>
           </div>
         </div>
