@@ -1,23 +1,19 @@
 "use client";
 
+// Tutorial: GSAP Barely Tried Yet This Landing Page Reveal Animation Looks Premium
+// YouTube URL: https://youtu.be/LdT57KOxmnQ?si=eN_dyur7nDaSCxNx
+// Inspiration: Permian
+// Website: https://www.permianworld.com/
+
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { SplitText } from "gsap/all";
 import { useRef } from "react";
 import styles from "./styles.module.css";
 import { RollingCounter } from "../(Counter)/rolling/page";
+import { AppScroll } from "@/lib/app-scroll";
 
 gsap.registerPlugin(SplitText);
-
-class AppScroll {
-  static lock() {
-    document.body.classList.add("disable-scroll");
-  }
-
-  static release() {
-    document.body.classList.remove("disable-scroll");
-  }
-}
 
 function animate(
   preLoaderOverlayEl: HTMLElementTagNameMap["div"] | null,
